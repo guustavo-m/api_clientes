@@ -25,7 +25,7 @@ pool.connect((erro, client, release) => {
 const criarTabela = async () => {
   const sql = `
   create table if not exists clientes (
-    idc serial primary key not null,
+    idcc serial primary key not null,
     nome varchar(100) not null,
     cpf varchar(14) not null,
     email varchar(100) not null,

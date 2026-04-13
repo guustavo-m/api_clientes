@@ -38,7 +38,7 @@ async function atualizar(id, dados) {
 
   const sql = `
     UPDATE clientes
-    SET nome = $1, cpf = $2, email = $3, telefone 
+    SET nome = $1, cpf = $2, email = $3, telefone = $4
     WHERE idc = $5
     RETURNING *
   `;

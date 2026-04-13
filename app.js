@@ -5,6 +5,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+app.use(express.static('./src/public'));
 app.use(express.json());
 
 const clientesRoutes = require('./src/routes/clientesRoutes');
