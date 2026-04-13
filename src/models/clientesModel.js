@@ -11,7 +11,7 @@ const pool = require('../config/database');
 async function listarTodos() {
   // PostgreSQL: a query retorna um objeto 'result'
   const result = await pool.query(
-    'SELECT * FROM clientes ORDER BY id'
+    'SELECT * FROM clientes ORDER BY idc'
   );
   
   // Os dados ficam em result.rows
@@ -28,7 +28,7 @@ async function buscarPorId(id) {
   // PostgreSQL usa $1, $2, $3... como placeholders
   // (SQLite usava ? ? ?)
   const result = await pool.query(
-    'SELECT * FROM clientes WHERE id = $1',
+    'SELECT * FROM clientes WHERE idc = $1',
     [id]  // O array com os valores dos placeholders
   );
   
@@ -43,20 +43,20 @@ async function buscarPorId(id) {
 // RETORNO: Promise com o cliente criado (incluindo o ID)
 // ============================================================
 async function criar(dados) {
-  const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = dados;
+  const { nome, cpf, email, telefone } = dados;
   
   // RETURNING * é um recurso do PostgreSQL que retorna
   // o registro inserido automaticamente!
   const sql = `
-    INSERT INTO clientes (nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    INSERT INTO clientes (nome, cpf, email, telefone)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
   `;
   
   // Executar a query com os valores
   const result = await pool.query(
     sql,
-    [nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro]
+    [nome, cpf, email, telefone]
   );
   
   // O cliente inserido com o ID gerado pelo banco
@@ -70,19 +70,19 @@ async function criar(dados) {
 // RETORNO: Promise com cliente atualizado ou null
 // ============================================================
 async function atualizar(id, dados) {
-  const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = dados;
+  const { nome, cpf, email, telefone } = dados;
   
   // UPDATE com RETURNING * também retorna o registro atualizado
   const sql = `
     UPDATE clientes
-    SET nome = $1, cpf = $2, telefone = $3, email = $4, datanasc = $5, rua = $6, numeroCasa = $7, bairro = $8
-    WHERE id = $9
+    SET nome = $1, cpf = $2, email = $3, telefone 
+    WHERE idc = $5
     RETURNING *
   `;
   
   const result = await pool.query(
     sql,
-    [nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro, id]
+    [nome, cpf, email, telefone, id]
   );
   
   // Se não atualizou nenhuma linha, retorna null
@@ -97,7 +97,7 @@ async function atualizar(id, dados) {
 // ============================================================
 async function deletar(id) {
   const result = await pool.query(
-    'DELETE FROM clientes WHERE id = $1',
+    'DELETE FROM clientes WHERE idc = $1',
     [id]
   );
   

@@ -55,10 +55,10 @@ async function buscarPorId(req, res) {
 // ============================================================
 async function criar(req, res) {
   try {
-    const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = req.body;
+    const { nome, cpf, email, telefone } = req.body;
     
     // Validações
-    if (!nome || !cpf || !telefone || !email || !datanasc || !rua || !numeroCasa || !bairro) {
+    if (!nome || !cpf || !email || !telefone) {
       return res.status(400).json({ 
         mensagem: 'Todos os campos são obrigatórios' 
       });
@@ -67,12 +67,8 @@ async function criar(req, res) {
     const novocliente = await ClientesModel.criar({ 
       nome,
       cpf,
-      telefone,
       email,
-      datanasc,
-      rua,
-      numeroCasa,
-      bairro
+      telefone
     });
     
     res.status(201).json(novocliente);
@@ -91,7 +87,7 @@ async function criar(req, res) {
 async function atualizar(req, res) {
   try {
     const id = parseInt(req.params.id);
-    const { nome, cpf, telefone, email, datanasc, rua, numeroCasa, bairro } = req.body;
+    const { nome, cpf, email, telefone } = req.body;
     
     if (isNaN(id)) {
       return res.status(400).json({ 
@@ -99,7 +95,7 @@ async function atualizar(req, res) {
       });
     }
     
-    if (!nome || !cpf || !telefone || !email || !datanasc || !rua || !numeroCasa || !bairro) {
+    if (!nome || !cpf || !email || !telefone) {
       return res.status(400).json({ 
         mensagem: 'Todos os campos são obrigatórios' 
       });
@@ -108,12 +104,8 @@ async function atualizar(req, res) {
     const clienteAtualizado = await ClientesModel.atualizar(id, { 
         nome,
         cpf,
-        telefone,
         email,
-        datanasc,
-        rua,
-        numeroCasa,
-        bairro
+        telefone
     });
     
     if (clienteAtualizado) {
