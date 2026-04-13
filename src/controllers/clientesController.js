@@ -1,11 +1,5 @@
-// Importar as funções do Model
 const ClientesModel = require('../models/clientesModel');
 
-// ============================================================
-// FUNÇÃO: listarTodos (ASSÍNCRONA)
-// ROTA: GET /clientes
-// DESCRIÇÃO: Lista todos os clientes do banco de dados
-// ============================================================
 async function listarTodos(req, res) {
   try {
     const clientes = await ClientesModel.listarTodos();
@@ -18,10 +12,6 @@ async function listarTodos(req, res) {
   }
 }
 
-// ============================================================
-// FUNÇÃO: buscarPorId (ASSÍNCRONA)
-// ROTA: GET /clientes/:id
-// ============================================================
 async function buscarPorId(req, res) {
   try {
     const id = parseInt(req.params.id);
@@ -49,15 +39,10 @@ async function buscarPorId(req, res) {
   }
 }
 
-// ============================================================
-// FUNÇÃO: criar (ASSÍNCRONA)
-// ROTA: POST /clientes
-// ============================================================
 async function criar(req, res) {
   try {
     const { nome, cpf, email, telefone } = req.body;
-    
-    // Validações
+
     if (!nome || !cpf || !email || !telefone) {
       return res.status(400).json({ 
         mensagem: 'Todos os campos são obrigatórios' 
@@ -80,10 +65,6 @@ async function criar(req, res) {
   }
 }
 
-// ============================================================
-// FUNÇÃO: atualizar (ASSÍNCRONA)
-// ROTA: PUT /clientes/:id
-// ============================================================
 async function atualizar(req, res) {
   try {
     const id = parseInt(req.params.id);
@@ -123,10 +104,6 @@ async function atualizar(req, res) {
   }
 }
 
-// ============================================================
-// FUNÇÃO: deletar (ASSÍNCRONA)
-// ROTA: DELETE /clientes/:id
-// ============================================================
 async function deletar(req, res) {
   try {
     const id = parseInt(req.params.id);
@@ -156,10 +133,6 @@ async function deletar(req, res) {
   }
 }
 
-// ============================================================
-// FUNÇÃO: buscarPorNome (ASSÍNCRONA)
-// ROTA: GET /clientes/nome/:nome
-// ============================================================
 async function buscarPorNome(req, res) {
   try {
     const { nome } = req.params;
@@ -173,9 +146,6 @@ async function buscarPorNome(req, res) {
   }
 }
 
-// ============================================================
-// EXPORTAR TODAS AS FUNÇÕES
-// ============================================================
 module.exports = {
   listarTodos,
   buscarPorId,

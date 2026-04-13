@@ -1,25 +1,11 @@
-// ============================================================
-// APP.JS - Arquivo Principal com dotenv
-// ============================================================
-
-// Carregar variáveis de ambiente ANTES de tudo
 require('dotenv').config();
 
 const express = require('express');
 const app = express();
 
-// Porta vem do .env, ou usa 3000 como padrão
 const PORT = process.env.PORT || 3000;
 
-// ============================================================
-// MIDDLEWARES
-// ============================================================
-
 app.use(express.json());
-
-// ============================================================
-// ROTAS
-// ============================================================
 
 const clientesRoutes = require('./src/routes/clientesRoutes');
 app.use('/clientes', clientesRoutes);
@@ -32,10 +18,6 @@ app.get('/', (req, res) => {
     banco: 'PostgreSQL'
   });
 });
-
-// ============================================================
-// INICIAR SERVIDOR
-// ============================================================
 
 app.listen(PORT, () => {
   console.log('='.repeat(50));
